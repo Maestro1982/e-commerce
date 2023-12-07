@@ -12,6 +12,7 @@ import { fetchDocs } from '../../_api/fetchDocs'
 import { Blocks } from '../../_components/Blocks'
 import { Hero } from '../../_components/Hero'
 import { Gutter } from '../../_components/Gutter'
+import Categories from '../../_components/Categories'
 
 import { generateMeta } from '../../_utilities/generateMeta'
 
@@ -65,7 +66,9 @@ export default async function Page({ params: { slug = 'home' } }) {
         <section>
           <Hero {...hero} />
 
-          <Gutter>{/* categories etc */}</Gutter>
+          <Gutter className={classes.home}>
+            <Categories categories={categories} />
+          </Gutter>
         </section>
       ) : (
         <>
