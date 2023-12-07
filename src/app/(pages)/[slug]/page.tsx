@@ -12,7 +12,9 @@ import { fetchDocs } from '../../_api/fetchDocs'
 import { Blocks } from '../../_components/Blocks'
 import { Hero } from '../../_components/Hero'
 import { Gutter } from '../../_components/Gutter'
+
 import Categories from '../../_components/Categories'
+import Promotion from '../../_components/Promotion'
 
 import { generateMeta } from '../../_utilities/generateMeta'
 
@@ -64,10 +66,13 @@ export default async function Page({ params: { slug = 'home' } }) {
     <React.Fragment>
       {slug === 'home' ? (
         <section>
-          <Hero {...hero} />
+          <Gutter className={classes.home}>
+            <Hero {...hero} />
+          </Gutter>
 
           <Gutter className={classes.home}>
             <Categories categories={categories} />
+            <Promotion />
           </Gutter>
         </section>
       ) : (
