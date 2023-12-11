@@ -1,4 +1,3 @@
-import React from 'react'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
@@ -63,7 +62,7 @@ export default async function Page({ params: { slug = 'home' } }) {
   const { hero, layout } = page
 
   return (
-    <React.Fragment>
+    <>
       {slug === 'home' ? (
         <section>
           <Gutter className={classes.home}>
@@ -84,7 +83,7 @@ export default async function Page({ params: { slug = 'home' } }) {
           />
         </>
       )}
-    </React.Fragment>
+    </>
   )
 }
 

@@ -1,6 +1,5 @@
 'use client'
 
-import React, { Fragment } from 'react'
 import Link from 'next/link'
 
 import { Page, Settings } from '../../../../payload/payload-types'
@@ -24,30 +23,30 @@ export const CartPage: React.FC<{
   const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart } = useCart()
 
   return (
-    <Fragment>
+    <>
       <br />
       {!hasInitializedCart ? (
         <div className={classes.loading}>
           <LoadingShimmer />
         </div>
       ) : (
-        <Fragment>
+        <>
           {cartIsEmpty ? (
             <div className={classes.empty}>
               Your cart is empty.
               {typeof productsPage === 'object' && productsPage?.slug && (
-                <Fragment>
+                <>
                   {' '}
                   <Link href={`/${productsPage.slug}`}>Click here</Link>
                   {` to shop.`}
-                </Fragment>
+                </>
               )}
               {!user && (
-                <Fragment>
+                <>
                   {' '}
                   <Link href={`/login?redirect=%2Fcart`}>Log in</Link>
                   {` to view a saved cart.`}
-                </Fragment>
+                </>
               )}
             </div>
           ) : (
@@ -113,8 +112,8 @@ export const CartPage: React.FC<{
               </div>
             </div>
           )}
-        </Fragment>
+        </>
       )}
-    </Fragment>
+    </>
   )
 }
