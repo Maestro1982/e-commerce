@@ -1,41 +1,41 @@
 'use client'
 
-import Link from 'next/link'
+import React, { useState } from 'react'
 import Image from 'next/image'
-import { useState } from 'react'
-
-import classes from './index.module.scss'
+import Link from 'next/link'
 
 import { Media } from '../../../_components/Media'
 import { Price } from '../../../_components/Price'
 import { RemoveFromCartButton } from '../../../_components/RemoveFromCartButton'
 
-const CartItem = ({ product, title, metaImage, qty, addItemToCard }) => {
+import classes from './index.module.scss'
+
+const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
   const [quantity, setQuantity] = useState(qty)
 
   const decrementQty = () => {
-    const updatedQuantity = quantity > 1 ? quantity - 1 : 1
+    const updatedQty = quantity > 1 ? quantity - 1 : 1
 
-    setQuantity(updatedQuantity)
-    addItemToCard({ product, quantity: Number(updatedQuantity) })
+    setQuantity(updatedQty)
+    addItemToCart({ product, quantity: Number(updatedQty) })
   }
 
   const incrementQty = () => {
-    const updatedQuantity = quantity + 1
+    const updatedQty = quantity + 1
 
-    setQuantity(updatedQuantity)
-    addItemToCard({ product, quantity: Number(updatedQuantity) })
+    setQuantity(updatedQty)
+    addItemToCart({ product, quantity: Number(updatedQty) })
   }
 
-  const enterQty = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedQuantity = Number(event.target.value)
+  const enterQty = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const updatedQty = Number(e.target.value)
 
-    setQuantity(updatedQuantity)
-    addItemToCard({ product, quantity: Number(updatedQuantity) })
+    setQuantity(updatedQty)
+    addItemToCart({ product, quantity: Number(updatedQty) })
   }
 
   return (
-    <li className={classes.item}>
+    <li className={classes.item} key={title}>
       <Link href={`/products/${product.slug}`} className={classes.mediaWrapper}>
         {!metaImage && <span>No image</span>}
         {metaImage && typeof metaImage !== 'string' && (
@@ -86,4 +86,5 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCard }) => {
     </li>
   )
 }
+
 export default CartItem

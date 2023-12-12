@@ -1,11 +1,10 @@
+import React from 'react'
 import { Metadata } from 'next'
-import Link from 'next/link'
 import Image from 'next/image'
-
-import { mergeOpenGraph } from '../../_utilities/mergeOpenGraph'
+import Link from 'next/link'
 
 import { RenderParams } from '../../_components/RenderParams'
-
+import { mergeOpenGraph } from '../../_utilities/mergeOpenGraph'
 import { RecoverPasswordForm } from './RecoverPasswordForm'
 
 import classes from './index.module.scss'
@@ -17,7 +16,7 @@ export default async function RecoverPassword() {
         <Link href="/">
           <Image
             src="/logo-black.svg"
-            alt="Logo"
+            alt="logo"
             width={250}
             height={23}
             className={classes.logo}
@@ -30,10 +29,9 @@ export default async function RecoverPassword() {
           <RenderParams className={classes.params} />
 
           <Link href="/login" className={classes.backLink}>
-            <Image src="/assets/icons/arrow-left.svg" alt="Left Arrow" width={24} height={24} />
-            <p>Back to login</p>
+            <Image src="/assets/icons/arrow-left.svg" alt="left arrow" width={24} height={24} />
+            <p>Back To Home</p>
           </Link>
-
           <div className={classes.formTitle}>
             <h3>Forgot Password</h3>
           </div>

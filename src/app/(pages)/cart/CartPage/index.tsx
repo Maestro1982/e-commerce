@@ -1,5 +1,6 @@
 'use client'
 
+import React, { Fragment } from 'react'
 import Link from 'next/link'
 
 import { Page, Settings } from '../../../../payload/payload-types'
@@ -7,9 +8,9 @@ import { Button } from '../../../_components/Button'
 import { LoadingShimmer } from '../../../_components/LoadingShimmer'
 import { useAuth } from '../../../_providers/Auth'
 import { useCart } from '../../../_providers/Cart'
+import CartItem from '../CartItem'
 
 import classes from './index.module.scss'
-import CartItem from '../CartItem'
 
 export const CartPage: React.FC<{
   settings: Settings
@@ -23,30 +24,30 @@ export const CartPage: React.FC<{
   const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart } = useCart()
 
   return (
-    <>
+    <Fragment>
       <br />
       {!hasInitializedCart ? (
         <div className={classes.loading}>
           <LoadingShimmer />
         </div>
       ) : (
-        <>
+        <Fragment>
           {cartIsEmpty ? (
             <div className={classes.empty}>
               Your cart is empty.
               {typeof productsPage === 'object' && productsPage?.slug && (
-                <>
+                <Fragment>
                   {' '}
                   <Link href={`/${productsPage.slug}`}>Click here</Link>
                   {` to shop.`}
-                </>
+                </Fragment>
               )}
               {!user && (
-                <>
+                <Fragment>
                   {' '}
                   <Link href={`/login?redirect=%2Fcart`}>Log in</Link>
                   {` to view a saved cart.`}
-                </>
+                </Fragment>
               )}
             </div>
           ) : (
@@ -82,7 +83,7 @@ export const CartPage: React.FC<{
                           title={title}
                           metaImage={metaImage}
                           qty={quantity}
-                          addItemToCard={addItemToCart}
+                          addItemToCart={addItemToCart}
                         />
                       )
                     }
@@ -95,14 +96,17 @@ export const CartPage: React.FC<{
                 <div className={classes.row}>
                   <h6 className={classes.cartTotal}>Summary</h6>
                 </div>
+
                 <div className={classes.row}>
                   <p className={classes.cartTotal}>Delivery Charge</p>
                   <p className={classes.cartTotal}>€0</p>
                 </div>
+
                 <div className={classes.row}>
                   <p className={classes.cartTotal}>Grand Total</p>
                   <p className={classes.cartTotal}>{cartTotal.formatted}</p>
                 </div>
+
                 <Button
                   className={classes.checkoutButton}
                   href={user ? '/checkout' : '/login?redirect=%2Fcheckout'}
@@ -112,8 +116,8 @@ export const CartPage: React.FC<{
               </div>
             </div>
           )}
-        </>
+        </Fragment>
       )}
-    </>
+    </Fragment>
   )
 }

@@ -1,17 +1,16 @@
 'use client'
 
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { Footer, Media } from '../../../../payload/payload-types'
-
 import { inclusions, noHeaderFooterUrls } from '../../../constants'
-
+import { Button } from '../../Button'
 import { Gutter } from '../../Gutter'
 
 import classes from './index.module.scss'
-import { Button } from '../../Button'
 
 const FooterComponent = ({ footer }: { footer: Footer }) => {
   const pathname = usePathname()
@@ -30,6 +29,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
                 height={36}
                 className={classes.icon}
               />
+
               <h5 className={classes.title}>{inclusion.title}</h5>
               <p>{inclusion.description}</p>
             </li>
@@ -41,10 +41,10 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
         <Gutter>
           <div className={classes.wrap}>
             <Link href="/">
-              <Image src="/logo-white.svg" alt="Logo" width={170} height={50} />
+              <Image src="/logo-white.svg" alt="logo" width={170} height={50} />
             </Link>
 
-            <p>{footer.copyright}</p>
+            <p>{footer?.copyright}</p>
 
             <div className={classes.socialLinks}>
               {navItems.map(item => {
@@ -75,4 +75,5 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
     </footer>
   )
 }
+
 export default FooterComponent

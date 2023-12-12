@@ -2,13 +2,14 @@ import React from 'react'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-
 import { Order } from '../../../../payload/payload-types'
-import { Button } from '../../../_components/Button'
+import { Gutter } from '../../../_components/Gutter'
 import { RenderParams } from '../../../_components/RenderParams'
 import { formatDateTime } from '../../../_utilities/formatDateTime'
-import { getMeUser } from '../../../_utilities/getMeUser'
+import { Button } from '../../../_components/Button'
+import { HR } from '../../../_components/HR'
 import { mergeOpenGraph } from '../../../_utilities/mergeOpenGraph'
+import { getMeUser } from '../../../_utilities/getMeUser'
 
 import classes from './index.module.scss'
 
@@ -38,49 +39,52 @@ export default async function Orders() {
       })
       ?.then(json => json.docs)
   } catch (error) {
-    console.log(error)
+    // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
+    // so swallow the error here and simply render the page with fallback data where necessary
+    // in production you may want to redirect to a 404  page or at least log the error somewhere
+    // console.error(error)
   }
 
   return (
-    <div>
-      <h5>My Orders</h5>
+    <Gutter className={classes.orders}>
+      <h1>Orders</h1>
       {(!orders || !Array.isArray(orders) || orders?.length === 0) && (
         <p className={classes.noOrders}>You have no orders.</p>
       )}
       <RenderParams />
       {orders && orders.length > 0 && (
-        <ul className={classes.orders}>
-          {orders?.map(order => (
-            <li key={order.id} className={classes.order}>
-              <Link className={classes.item} href={`/account/orders/${order.id}`}>
+        <ul className={classes.ordersList}>
+          {orders?.map((order, index) => (
+            <li key={order.id} className={classes.listItem}>
+              <Link className={classes.item} href={`/orders/${order.id}`}>
                 <div className={classes.itemContent}>
-                  <h6 className={classes.itemTitle}>{`Order ${order.id}`}</h6>
+                  <h4 className={classes.itemTitle}>{`Order ${order.id}`}</h4>
                   <div className={classes.itemMeta}>
+                    <p>{`Ordered On: ${formatDateTime(order.createdAt)}`}</p>
                     <p>
                       {'Total: '}
                       {new Intl.NumberFormat('en-US', {
                         style: 'currency',
-                        currency: 'usd',
+                        currency: 'eur',
                       }).format(order.total / 100)}
                     </p>
-                    <p className={classes.orderDate}>{`Ordered On: ${formatDateTime(
-                      order.createdAt,
-                    )}`}</p>
                   </div>
                 </div>
                 <Button
-                  appearance="default"
+                  appearance="secondary"
                   label="View Order"
                   className={classes.button}
-                  el="link"
-                  href={`/account/orders/${order.id}`}
+                  el="button"
                 />
               </Link>
+              {index !== orders.length - 1 && <HR />}
             </li>
           ))}
         </ul>
       )}
-    </div>
+      <HR />
+      <Button href="/account" appearance="primary" label="Go to account" />
+    </Gutter>
   )
 }
 
